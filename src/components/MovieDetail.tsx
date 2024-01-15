@@ -31,9 +31,19 @@ function MovieDetail() {
   if (isError) return <p>Error fetching movie</p>;
 
   return (
-    <div>
-      <h2>{movie.title}</h2>
-      <p>{movie.overview}</p>
+    <div className="container mx-auto">
+      <div className="mt-4">
+        <img
+          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          alt={movie.title}
+          className="w-full h-64 object-cover mb-4 rounded-md"
+        />
+        <h2 className="text-2xl font-semibold mb-2">{movie.title}</h2>
+        <p className="text-gray-700 mb-4">{movie.overview}</p>
+        <p>
+          <strong>IMDb Rating:</strong> {movie.vote_average}
+        </p>
+      </div>
     </div>
   );
 }
