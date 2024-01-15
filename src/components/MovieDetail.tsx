@@ -3,18 +3,28 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const fetchMovieDetail = async (id) => {
-  const response = await axios.get(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=YOUR_API_KEY`
+const API_KEY = '4bcc16dce61a3bec384c3df4bf720b60'
+
+interface Movie {
+  id: number;
+  title: string;
+  overview: string;
+}
+
+const fetchMovieDetail = async (id: string) => {
+  const response = await axios.get<Movie>(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
   );
   return response.data;
 };
 
 function MovieDetail() {
-  const { id } = useParams();
-  const { data: movie, isLoading, isError } = useQuery(['movie', id], () =>
+  const { id } = useParams<{ id: string }>();
+  const { data: movie, isLoading, isError } = useQuery<Movie>(['movie', id], () =>
     fetchMovieDetail(id)
   );
+
+  console.log(movie)
 
   if (isLoading) return <p>Loading...</p>;
 
